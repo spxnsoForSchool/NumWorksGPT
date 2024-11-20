@@ -1,0 +1,2 @@
+Flask==2.3.3
+ollama==3.2.0  # Replace with the correct version of Ollama SDK
