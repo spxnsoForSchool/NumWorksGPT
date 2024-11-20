@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-import ollama  # Assuming Ollama provides a Python SDK or you interact with an API.
+import ollama  # Ensure the Ollama Python library is installed
 
 app = Flask(__name__)
 
@@ -8,15 +8,25 @@ def ollama_route():
     # Get the input data from the request
     data = request.json
     user_input = data.get("input", "")
-    
+
     if not user_input:
         return jsonify({"error": "No input provided"}), 400
 
-    # Interact with Ollama
     try:
-        # Example: Call a function from Ollama SDK or an API endpoint
-        response = ollama.query(prompt=user_input)  # Adjust b
-        return jsonify({"result": response})
+        # Interact with Ollama using the chat method
+        response = ollama.chat(
+            model="mistral",  # Specify the model to use
+            messages=[
+                {
+                    "role": "user",
+                    "content": user_input,
+                }
+            ]
+        )
+
+        # Extract the response content
+        return jsonify({"result": response.get("content", "No response from Ollama")})
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
