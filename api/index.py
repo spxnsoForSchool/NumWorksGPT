@@ -25,7 +25,8 @@ def ollama_route():
         )
 
         # Extract the response content
-        return jsonify({"result": response.get("content", "No response from Ollama")})
+        mesg = print(response['message']['content'])
+        return jsonify({"result": mesg})
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
